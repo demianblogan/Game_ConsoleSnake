@@ -354,3 +354,18 @@ void Console::ToggleCursorVisibility(bool isVisible)
 	cursorInfo.dwSize = 100; // % of the character cell that is filled by the cursor.
 	::SetConsoleCursorInfo(console, &cursorInfo);
 }
+
+void Console::ClearScreen()
+{
+	HANDLE console = ::GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO screenInfo;
+	::GetConsoleScreenBufferInfo(console, &screenInfo);
+
+	COORD topLeftCoordinate = { 0, 0 };
+	DWORD charsWritten;
+	::FillConsoleOutputCharacterW(console, ' ', screenInfo.dwSize.X * screenInfo.dwSize.Y, topLeftCoordinate, &charsWritten);
+
+	DWORD length = screenInfo.dwSize.X * screenInfo.dwSize.Y;
+	::FillConsoleOutputAttribute(console, winAPI_textColor | winAPI_backgroundColor, length, topLeftCoordinate, &charsWritten);
+	::SetConsoleCursorPosition(console, topLeftCoordinate);
+}

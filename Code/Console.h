@@ -64,4 +64,6 @@ public:
 	static void ChangeBackgroundColor(Color color);
 
 	static void ToggleCursorVisibility(bool isVisible);
+
+	static void ClearScreen();
 };
