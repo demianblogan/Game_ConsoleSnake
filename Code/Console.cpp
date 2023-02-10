@@ -331,26 +331,26 @@ int Console::GetHeight()
 
 void Console::ChangeTextColor(Color color)
 {
-	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE console = ::GetStdHandle(STD_OUTPUT_HANDLE);
 	winAPI_textColor = ConvertColorToWinApiTextColor(color);
 
-	SetConsoleTextAttribute(console, winAPI_textColor | winAPI_backgroundColor);
+	::SetConsoleTextAttribute(console, winAPI_textColor | winAPI_backgroundColor);
 }
 
 void Console::ChangeBackgroundColor(Color color)
 {
-	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE console = ::GetStdHandle(STD_OUTPUT_HANDLE);
 	winAPI_backgroundColor = ConvertColorToWinApiBackgroundColor(color);
 
-	SetConsoleTextAttribute(console, winAPI_textColor | winAPI_backgroundColor);
+	::SetConsoleTextAttribute(console, winAPI_textColor | winAPI_backgroundColor);
 }
 
 void Console::ToggleCursorVisibility(bool isVisible)
 {
-	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE console = ::GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO cursorInfo;
-	GetConsoleCursorInfo(console, &cursorInfo);
+	::GetConsoleCursorInfo(console, &cursorInfo);
 	cursorInfo.bVisible = isVisible;
 	cursorInfo.dwSize = 100; // % of the character cell that is filled by the cursor.
-	SetConsoleCursorInfo(console, &cursorInfo);
+	::SetConsoleCursorInfo(console, &cursorInfo);
 }
